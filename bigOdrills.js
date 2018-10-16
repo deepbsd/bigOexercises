@@ -1,6 +1,6 @@
 // These are functions that I'm being asked to quantify as one or another type of bigO time complexity
 
-const fnName = isEven;
+const fnName = naiveSearch;
 
 
 // Even or odd == 0(1) Constant time
@@ -18,7 +18,44 @@ function isEven(val){
 }
 
 
+// Are you here?
+function areYouHere(arr1, arr2=arr1) {
+    let ticks = 0;
+    for (let i=0; i<arr1.length; i++) {
+        ticks++;
+        const el1 = arr1[i];
+        for (let j=0; j<arr2.length; j++) {
+            ticks++;
+            const el2 = arr2[j];
+            if (el1 === el2) return { ticks: ticks, result: true};
+        }
+    }
+    
+    return {ticks: ticks, result: false};
+}
 
+
+function doubleArrayValues(array) {
+    let ticks = 0;
+    for (let i=0; i<array.length; i++) {
+        ticks++;
+        array[i] *= 2;
+    }
+    return { ticks: ticks, result: array};
+}
+
+
+
+function naiveSearch(array, item=array[array.length-3]) {
+    let ticks = 0;
+    for (let i=0; i<array.length; i++) {
+        ticks++;
+        if (array[i] === item) {
+            ticks++;
+            return {ticks: ticks, result: i};
+        }
+    }
+}
 
 
 function getRunTimeOperations(fn, input) {
