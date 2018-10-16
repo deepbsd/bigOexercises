@@ -1,6 +1,6 @@
 // These are functions that I'm being asked to quantify as one or another type of bigO time complexity
 
-const fnName = naiveSearch;
+const fnName = createPairs;
 
 
 // Even or odd == 0(1) Constant time
@@ -55,6 +55,19 @@ function naiveSearch(array, item=array[array.length-3]) {
             return {ticks: ticks, result: i};
         }
     }
+}
+
+function createPairs(arr) {
+    let ticks = 0, pairs = "";
+    for (let i = 0; i < arr.length; i++) {
+        ticks++;
+        for(let j = i+1; j < arr.length; j++) {
+            ticks++;
+            //console.log(arr[i] + ", " +  arr[j] );
+            pairs = pairs + arr[i] + ", " + arr[j];
+        }
+    }
+    return { ticks: ticks, result: pairs}
 }
 
 
