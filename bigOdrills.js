@@ -1,6 +1,6 @@
 // These are functions that I'm being asked to quantify as one or another type of bigO time complexity
 
-const fnName = createPairs;
+const fnName = isPrime;
 
 
 // Even or odd == 0(1) Constant time
@@ -17,9 +17,13 @@ function isEven(val){
       result: true};
 }
 
+function createRandArray(l){
+  let arr = Array(l).fill(0).map(function(n){ return Math.round(Math.random()*100)} );
+  return arr.sort();
+}
 
 // Are you here?
-function areYouHere(arr1, arr2=arr1) {
+function areYouHere(arr1, arr2=createRandArray(arr1.length)) {
     let ticks = 0;
     for (let i=0; i<arr1.length; i++) {
         ticks++;
@@ -45,17 +49,23 @@ function doubleArrayValues(array) {
 }
 
 
+function createRandNum(){
+  return Math.round(Math.random()*100)
+}
 
-function naiveSearch(array, item=array[array.length-3]) {
+function naiveSearch(array, item=createRandNum()) {
     let ticks = 0;
     for (let i=0; i<array.length; i++) {
         ticks++;
         if (array[i] === item) {
             ticks++;
-            return {ticks: ticks, result: i};
+            return {ticks: ticks, result: i };
         }
     }
+    return {ticks: ticks, result: false };
 }
+
+
 
 function createPairs(arr) {
     let ticks = 0, pairs = "";
@@ -69,6 +79,93 @@ function createPairs(arr) {
     }
     return { ticks: ticks, result: pairs}
 }
+
+
+function generateFib(array) {
+  let num = array.length;
+  let ticks = 0, result = [];
+  for (let i = 1; i <= num; i++) {
+
+    // we're adding the first item
+    // to the result list, append the
+    // number 0 to results
+    if (i === 1) {
+      ticks++;
+      result.push(0);
+    }
+    // ...and if it's the second item
+    // append 1
+    else if (i == 2) {
+      ticks++;
+      result.push(1);
+    }
+
+    // otherwise, sum the two previous result items, and append that value to results.
+    else {
+      ticks++;
+      result.push(result[i - 2] + result[i - 3]);
+    }
+  }
+  // once the for loop finishes
+  // we return `result`.
+  return {ticks: ticks, result: result};
+}
+
+
+function efficientSearch(array, item=Math.round(Math.random()*array.length)) {
+    let ticks = 0, result = null;
+    let minIndex = 0;
+    let maxIndex = array.length - 1;
+    let currentIndex;
+    let currentElement;
+
+    while (minIndex <= maxIndex) {
+        currentIndex = Math.floor((minIndex + maxIndex) / 2);
+        currentElement = array[currentIndex];
+
+        if (currentElement < item) {
+            ticks++;
+            minIndex = currentIndex + 1;
+        }
+        else if (currentElement > item) {
+            ticks++;
+            maxIndex = currentIndex - 1;
+        }
+        else {
+            ticks++;
+            return {ticks: ticks, result: currentIndex};
+        }
+    }
+    return {ticks: ticks, result: -1};
+}
+
+function findRandomElement(arr) {
+    let ticks = 0, result = null;
+    ticks++;
+    return { ticks: ticks, result: arr[Math.floor(Math.random() * arr.length)] };
+}
+
+
+function isPrime(arr) {
+    let ticks = 0, n = Math.round(Math.random()*1000);
+    console.log("N: ",n);
+    // if n is less than 2 or a decimal, it's not prime
+    if (n < 2 || n % 1 != 0) {
+        ticks++;
+        return { ticks: ticks, result: false};
+    }
+    // otherwise, check if `n` is divisible by any integer
+    // between 2 and n.
+    for (let i = 2; i < n; ++i) {
+        ticks++;
+        if (n % i == 0) {
+          return {ticks: ticks+1, result: false };
+        }
+    }
+    ticks++;
+    return { ticks: ticks, result: true };
+}
+
 
 
 function getRunTimeOperations(fn, input) {
