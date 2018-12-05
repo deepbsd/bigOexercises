@@ -123,4 +123,22 @@ function isPrime(n) {
 
 
 
+function testIt(func, params){
+
+    let output = (fn, params) => { 
+        console.time(`${toString(fn)}`); 
+        fn(params); 
+        console.timeEnd(`${toString(fn)}`); 
+    }
+    return output(func,params)
+}
+
+
+//console.log(testIt(isPrime, 18876777))
+console.time("isItPrime")
+     let num = 18876777
+     let answer = isPrime(num)
+     console.log(`${num} is Prime? --> ${answer}`)
+console.timeEnd("isItPrime")
+
 
